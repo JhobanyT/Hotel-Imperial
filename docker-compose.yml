@@ -1,0 +1,45 @@
+version: '3'
+services:
+  comentario:
+    build: './microservicio-comentario'
+    ports:
+      - "3000:3000"
+
+  eventos:
+    build: './microservicio-eventos'
+    ports:
+      - "3001:3000"
+    depends_on: 
+      - db
+
+  reserva:
+    build: './microservicio-reserva'
+    ports:
+      - "3002:3000"
+    depends_on: 
+      - db
+
+  servicios:
+    build: './microservicio-servicios'
+    ports:
+      - "3003:3000"
+    depends_on: 
+      - db
+
+  sucursales:
+    build: './microservicio-sucursales'
+    ports:
+      - "3004:3000"
+    depends_on: 
+      - db
+  
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
